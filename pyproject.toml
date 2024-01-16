@@ -1,0 +1,106 @@
+[build-system]
+requires = ["setuptools", "setuptools-scm"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "exif-stripper"
+dependencies = ["pillow"]
+requires-python = ">=3.8"
+authors = [
+    {name = "Stefanie Molin", email = "24376333+stefmolin@users.noreply.github.com"},
+]
+description = "Pre-commit hook to ensure image EXIF data is removed."
+readme = "README.md"
+license = {file = "LICENSE"}
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "License :: OSI Approved :: Apache License",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+]
+keywords = [
+    'exif',
+    'metadata',
+    'image processing',
+    'pre-commit',
+]
+dynamic = ["version"]
+
+[project.optional-dependencies]
+dev = [
+    "pre-commit",
+    "pytest",
+    "pytest-cov",
+    "pytest-randomly",
+]
+
+[project.scripts]
+strip-exif = "exif_stripper.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/stefmolin/exif-stripper"
+Documentation = "https://github.com/stefmolin/exif-stripper"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.dynamic]
+version = {attr = "exif_stripper.__version__"}
+
+[tool.ruff]
+line-length = 88
+select = [
+    "C",  # mccabe rules
+    "F",  # pyflakes rules
+    "E",  # pycodestyle error rules
+    "W",  # pycodestyle warning rules
+    "B",  # flake8-bugbear rules
+    "I",  # isort rules
+]
+ignore = [
+    "C901",  # max-complexity-10
+    "E501",  # line-too-long
+]
+
+[tool.ruff.format]
+indent-style = "space"
+quote-style = "single"
+
+[tool.numpydoc_validation]
+checks = [
+    "all",  # report on all checks
+    "ES01", # but don't require an extended summary
+    "EX01", # or examples
+    "SA01", # or a see also section
+    "SS06", # and don't require the summary to fit on one line
+]
+exclude = [  # don't report on checks for these
+    '\.__init__$',
+    '\.__repr__$',
+    '\.__str__$',
+]
+override_SS05 = [  # allow docstrings to start with these words
+    '^Process ',
+    '^Assess ',
+    '^Access ',
+]
+
+[tool.pytest.ini_options]
+addopts = [
+    "-ra",
+    "-l",
+    "-v",
+    "--tb=short",
+    "--import-mode=importlib",
+    "--strict-markers",
+    "--strict-config",
+    "--cov=exif_stripper",
+    "--cov=tests",
+    "--no-cov-on-fail",
+]
+xfail_strict = true
+testpaths = ["tests"]
