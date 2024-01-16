@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import argparse
+import subprocess
 from typing import Sequence
 
 from PIL import Image, UnidentifiedImageError
@@ -24,16 +25,27 @@ def process_image(filename: str) -> bool:
     bool
         Indicator of whether metadata was stripped.
     """
+    has_changed = False
     try:
         with Image.open(filename) as im:
             exif = im.getexif()
             if exif:
                 exif.clear()
                 im.save(filename)
-                return True
+                has_changed = True
     except (FileNotFoundError, UnidentifiedImageError):
-        pass
-    return False
+        pass  # not an image
+    else:
+        try:  # Unix only
+            result = subprocess.run(
+                ['xattr', '-l', filename], capture_output=True, check=True
+            )
+            if result.stdout:
+                subprocess.run(['xattr', '-c', filename], check=True)
+                has_changed = True
+        except subprocess.CalledProcessError:
+            pass
+    return has_changed
 
 
 def main(argv: Sequence[str] | None = None) -> int:
