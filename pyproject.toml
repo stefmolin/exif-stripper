@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "exif-stripper"
-dependencies = ["pillow", "xattr"]
+dependencies = ["pillow", "xattr ; platform_system != 'Windows'"]
 requires-python = ">=3.8"
 authors = [
     {name = "Stefanie Molin", email = "24376333+stefmolin@users.noreply.github.com"},
@@ -70,6 +70,9 @@ ignore = [
 indent-style = "space"
 quote-style = "single"
 
+[tool.ruff.isort]
+known-first-party = ["exif_stripper"]
+
 [tool.numpydoc_validation]
 checks = [
     "all",  # report on all checks
@@ -101,6 +104,7 @@ addopts = [
     "--cov=exif_stripper",
     "--cov=tests",
     "--no-cov-on-fail",
+    "--cov-report=term-missing",
 ]
 xfail_strict = true
 testpaths = ["tests"]
