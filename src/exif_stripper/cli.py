@@ -3,21 +3,24 @@
 from __future__ import annotations
 
 import argparse
-import subprocess
+import os
+import platform
 from typing import Sequence
 
 from PIL import Image, UnidentifiedImageError
 
 from . import __version__
 
+PROG = 'strip-exif'
 
-def process_image(filename: str) -> bool:
+
+def process_image(filename: str | os.PathLike) -> bool:
     """
     Process image metadata.
 
     Parameters
     ----------
-    filename : str
+    filename : str | os.PathLike
         The image file to check.
 
     Returns
@@ -27,6 +30,7 @@ def process_image(filename: str) -> bool:
     """
     has_changed = False
     try:
+        # remove EXIF data
         with Image.open(filename) as im:
             exif = im.getexif()
             if exif:
@@ -36,15 +40,16 @@ def process_image(filename: str) -> bool:
     except (FileNotFoundError, UnidentifiedImageError):
         pass  # not an image
     else:
-        try:  # Unix only
-            result = subprocess.run(
-                ['xattr', '-l', filename], capture_output=True, check=True
-            )
-            if result.stdout:
-                subprocess.run(['xattr', '-c', filename], check=True)
+        # remove extended attributes (Unix only)
+        if platform.system() != 'Windows':
+            from xattr import xattr
+
+            xattr_obj = xattr(filename)
+            extended_attributes = xattr_obj.list()
+            if extended_attributes:
+                xattr_obj.clear()
                 has_changed = True
-        except subprocess.CalledProcessError:
-            pass
+
     return has_changed
 
 
@@ -63,7 +68,7 @@ def main(argv: Sequence[str] | None = None) -> int:
         Exit code for the process: if metadata was stripped,
         this will be 1 to stop a commit as a pre-commit hook.
     """
-    parser = argparse.ArgumentParser(prog='strip-exif')
+    parser = argparse.ArgumentParser(prog=PROG)
     parser.add_argument(
         'filenames',
         nargs='*',
