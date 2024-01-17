@@ -32,7 +32,7 @@ jobs:
   publish-to-pypi:
     name: >-
       Publish Python 🐍 distribution 📦 to PyPI
-    if: startsWith(github.ref, 'refs/tags/') && !contains(github.ref, '.rc')  # only publish releases to PyPI on tag pushes
+    if: startsWith(github.ref, 'refs/tags/') && !contains(github.ref, '-rc')  # only publish releases to PyPI on tag pushes
     needs:
     - build
     runs-on: ubuntu-latest
@@ -96,7 +96,7 @@ jobs:
 
   publish-to-testpypi:
     name: Publish Python 🐍 distribution 📦 to TestPyPI
-    if: startsWith(github.ref, 'refs/tags/') && contains(github.ref, '.rc') # only publish release candidates to TestPyPI on tag pushes
+    if: startsWith(github.ref, 'refs/tags/') && contains(github.ref, '-rc') # only publish release candidates to TestPyPI on tag pushes
     needs:
     - build
     runs-on: ubuntu-latest

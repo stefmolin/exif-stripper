@@ -1,3 +1,3 @@
 """EXIF stripper."""
 
-__version__ = '0.1.1.rc'
+__version__ = '0.1.1'
