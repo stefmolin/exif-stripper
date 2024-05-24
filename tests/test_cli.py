@@ -2,6 +2,7 @@
 
 import platform
 import subprocess
+import sys
 
 import pytest
 from PIL import Image
@@ -100,6 +101,6 @@ def test_cli_version(capsys):
 def test_main_access_cli(flag, return_code, image_with_metadata):
     """Confirm that CLI can be accessed via python -m."""
     result = subprocess.run(
-        ['python', '-m', 'exif_stripper.cli', flag or str(image_with_metadata)]
+        [sys.executable, '-m', 'exif_stripper.cli', flag or str(image_with_metadata)]
     )
     assert result.returncode == return_code
