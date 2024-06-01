@@ -1,0 +1,41 @@
+# This workflow runs pre-commit hooks on the files in the PR only.
+#
+# Author: Stefanie Molin
+
+name: Check PR
+
+on:
+  pull_request:
+    paths:
+      - 'src/**'
+      - 'tests/**'
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref || github.run_id }}
+  cancel-in-progress: true
+
+jobs:
+  # Run pre-commit checks on all files
+  linting:
+    runs-on: ubuntu-latest
+    name: Lint
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install pre-commit
+          pre-commit install
+
+      - name: Run Checks
+        run: |
+          pre-commit run --all-files --show-diff-on-failure
