@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "exif-stripper"
-dependencies = ["pillow", "xattr ; platform_system != 'Windows'"]
+dependencies = ["pillow>=10.3.0", "xattr ; platform_system != 'Windows'"]
 requires-python = ">=3.8"
 authors = [
     {name = "Stefanie Molin", email = "24376333+stefmolin@users.noreply.github.com"},
