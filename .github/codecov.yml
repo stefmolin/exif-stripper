@@ -11,11 +11,11 @@ coverage:
   status:
     patch:
       default:
-        target: 90%
+        target: 95%
     project:
       default: false
       exif_stripper:
-        target: 90%
+        target: 95%
         paths:
           - "!tests/.*"
       tests:
