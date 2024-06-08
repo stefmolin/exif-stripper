@@ -28,7 +28,8 @@ If applicable, add screenshots to help explain your problem.
  - OS: [e.g. iOS]
  - Browser [e.g. chrome, safari]
  - Python Version [e.g. 22]
-- `exif-stripper` version
+ - `pillow` version
+ - `xattr` version, if not using Windows
 
 **Additional context**
 Add any other context about the problem here.
