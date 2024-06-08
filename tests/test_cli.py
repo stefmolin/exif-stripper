@@ -32,12 +32,16 @@ def image_with_exif_data(tmp_path):
 def image_with_metadata(image_with_exif_data):
     """Fixture for an image with metadata."""
     if RUNNING_ON in ['Darwin', 'Linux']:
-        xattr(image_with_exif_data).set(
-            f'{getuser()}.test_extended_attribute'
-            if RUNNING_ON == 'Linux'
-            else 'com.apple.macl',
-            b'\x00',
-        )
+        try:
+            xattr(image_with_exif_data).set(
+                f'{getuser()}.test_extended_attribute'
+                if RUNNING_ON == 'Linux'
+                else 'com.apple.macl',
+                b'\x00',
+            )
+        except OSError:  # pragma: nocover
+            # filesystem does not support extended attributes
+            pass
     return image_with_exif_data
 
 
