@@ -53,3 +53,6 @@ Add the following to your `.pre-commit-config.yaml` file:
   hooks:
     - id: strip-exif
 ```
+
+## Contributing
+Please consult the [contributing guidelines](CONTRIBUTING.md).
