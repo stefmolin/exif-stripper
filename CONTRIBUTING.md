@@ -1,4 +1,4 @@
-# Contributing to `exif-stripper`
+# Contributing Guidelines
 
 Contributions are welcome. Please adhere to the following process.
 
@@ -6,7 +6,7 @@ Contributions are welcome. Please adhere to the following process.
 Open up an issue describing in detail the bug or feature request you are proposing. Be sure to fill out all the information requested in the template. Please wait for confirmation from a maintainer that this unit of work is in line with the project's roadmap *before* submitting a pull request.
 
 ## 2. Work on your changes
-Once you have been given the go ahead, you can start working on the code. Start by forking the project, cloning locally, and then creating a branch to work on. You will need to then install the `dev` dependencies, which can be done by running the following command:
+Once you have been given the go ahead, you can start working on the code. Start by forking the project, cloning locally, and then creating a branch to work on. You will need to then install main dependencies as well as the `dev` dependencies, which can be done by running the following command:
 
 ```shell
 $ pip -e '.[dev]'
