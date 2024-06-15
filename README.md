@@ -49,7 +49,7 @@ Add the following to your `.pre-commit-config.yaml` file:
 
 ```yaml
 - repo: https://github.com/stefmolin/exif-stripper
-  rev: 0.1.2
+  rev: 0.2.0
   hooks:
     - id: strip-exif
 ```
