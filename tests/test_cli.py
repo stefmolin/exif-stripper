@@ -92,7 +92,7 @@ def test_process_image_file_issues(tmp_path, exists):
     assert not has_changed
 
 
-def test_main(tmp_path, image_with_metadata):
+def test_main(tmp_path, image_with_metadata, capsys):
     """Test that cli.main() returns the number of files altered."""
     file_without_metadata = tmp_path / 'clean.png'
     file_without_metadata.touch()
@@ -100,6 +100,8 @@ def test_main(tmp_path, image_with_metadata):
     files_changed = cli.main([str(file_without_metadata), str(image_with_metadata)])
 
     assert files_changed == 1
+
+    assert capsys.readouterr().out.strip().endswith(str(image_with_metadata))
 
 
 def test_cli_version(capsys):
