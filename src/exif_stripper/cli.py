@@ -32,8 +32,7 @@ def process_image(filename: str | os.PathLike) -> bool:
     try:
         # remove EXIF data
         with Image.open(filename) as im:
-            exif = im.getexif()
-            if exif:
+            if exif := im.getexif():
                 exif.clear()
                 im.save(filename)
                 has_changed = True
@@ -45,10 +44,12 @@ def process_image(filename: str | os.PathLike) -> bool:
             from xattr import xattr
 
             xattr_obj = xattr(filename)
-            extended_attributes = xattr_obj.list()
-            if extended_attributes:
+            if xattr_obj.list():
                 xattr_obj.clear()
                 has_changed = True
+
+    if has_changed:
+        print(f'Stripped metadata from {filename}')
 
     return has_changed
 
