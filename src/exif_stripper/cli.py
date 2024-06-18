@@ -50,6 +50,9 @@ def process_image(filename: str | os.PathLike) -> bool:
                 xattr_obj.clear()
                 has_changed = True
 
+    if has_changed:
+        print(f'Stripped metadata from {filename}')
+
     return has_changed
 
 
