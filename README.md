@@ -1,6 +1,6 @@
 # exif-stripper
 
-Pre-commit hook to ensure image EXIF data is removed.
+Pre-commit hook to ensure image metadata (EXIF data and extended attributes) is removed.
 
 <table>
    <tr>
@@ -34,7 +34,7 @@ Pre-commit hook to ensure image EXIF data is removed.
    </tr>
    <tr>
      <td>
-      <img alt="Downloads" src="https://img.shields.io/badge/%23%20downloads-inactive?style=for-the-badge">
+      <img alt="Downloads" src="https://img.shields.io/badge/%23downloads-inactive?style=for-the-badge">
      </td>
      <td>
       <a href="https://pypi.org/project/exif-stripper/" target="_blank" rel="noopener noreferrer">
