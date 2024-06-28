@@ -81,7 +81,7 @@ def main(argv: Sequence[str] | None = None) -> int:
     args = parser.parse_args(argv)
 
     results = [process_image(filename) for filename in args.filenames]
-    return min(1, sum(results))
+    return int(any(results))
 
 
 if __name__ == '__main__':
