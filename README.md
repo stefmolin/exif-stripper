@@ -45,6 +45,7 @@ Pre-commit hook to ensure image metadata (EXIF data and extended attributes) is 
   </table>
 
 ## Usage
+
 Add the following to your `.pre-commit-config.yaml` file:
 
 ```yaml
@@ -53,6 +54,8 @@ Add the following to your `.pre-commit-config.yaml` file:
   hooks:
     - id: strip-exif
 ```
+
+Be sure to check out the [pre-commit documentation](https://pre-commit.com/#pre-commit-configyaml---hooks) for additional configuration options.
 
 ## Contributing
 Please consult the [contributing guidelines](CONTRIBUTING.md).
