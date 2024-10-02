@@ -12,15 +12,15 @@ on:
     branches: [ "main" ]
     paths:
       - '**'
-      - '.github/workflows/ci.yml'
       - '!.github/**'
+      - '.github/workflows/ci.yml'
     tags: [ "v*" ]
 
   pull_request:
     paths:
       - '**'
-      - '.github/workflows/ci.yml'
       - '!.github/**'
+      - '.github/workflows/ci.yml'
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.head_ref || github.run_id }}
