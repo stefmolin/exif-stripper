@@ -10,13 +10,17 @@ name: CI
 on:
   push:
     branches: [ "main" ]
-    paths-ignore:
-      - '.github/**'
+    paths:
+      - '**'
+      - '.github/workflows/ci.yml'
+      - '!.github/**'
     tags: [ "v*" ]
 
   pull_request:
-    paths-ignore:
-      - '.github/**'
+    paths:
+      - '**'
+      - '.github/workflows/ci.yml'
+      - '!.github/**'
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.head_ref || github.run_id }}
