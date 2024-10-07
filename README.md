@@ -46,16 +46,52 @@ Pre-commit hook to ensure image metadata (EXIF data and extended attributes) is 
 
 ## Usage
 
+### Pre-commit hook
+
 Add the following to your `.pre-commit-config.yaml` file:
 
 ```yaml
 - repo: https://github.com/stefmolin/exif-stripper
-  rev: 0.3.1
+  rev: 0.4.0
   hooks:
     - id: strip-exif
 ```
 
 Be sure to check out the [pre-commit documentation](https://pre-commit.com/#pre-commit-configyaml---hooks) for additional configuration options.
 
+### Command line
+
+First, install the `exif-stripper` package from PyPI:
+
+```shell
+$ python -m pip install exif-stripper
+```
+
+Then, use the `strip-exif` entry point on the file(s) of your choice:
+
+```shell
+$ strip-exif /path/to/file [/path/to/another/file]
+```
+
+Run `strip-exif --help` for more information.
+
+### Python
+
+First, install the `exif-stripper` package from PyPI:
+
+```shell
+$ python -m pip install exif-stripper
+```
+
+Then, use the `process_image()` function on individual files (returns `True` if the file was altered and `False` otherwise):
+
+```python
+from exif_stripper import process_image
+process_image('/path/to/image')
+```
+
+*Note: This requires version 0.4.0 or above.*
+
 ## Contributing
+
 Please consult the [contributing guidelines](CONTRIBUTING.md).
