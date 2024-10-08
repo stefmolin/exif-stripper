@@ -1,6 +1,5 @@
-# exif-stripper
-
-Pre-commit hook to ensure image metadata (EXIF data and extended attributes) is removed.
+<div align="center">
+   <img alt="exif-stripper logo" src="https://github.com/stefmolin/exif-stripper/raw/logo/logo.svg">
 
 <table>
    <tr>
@@ -43,6 +42,13 @@ Pre-commit hook to ensure image metadata (EXIF data and extended attributes) is 
      </td>
    </tr>
   </table>
+  
+  <hr>
+</div>
+
+# exif-stripper
+
+An easy-to-use tool to ensure image metadata (EXIF data and extended attributes) is removed.
 
 ## Usage
 
