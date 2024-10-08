@@ -8,7 +8,7 @@ requires = [
 
 [project]
 name = "exif-stripper"
-description = "Pre-commit hook to ensure image EXIF data is removed."
+description = "An easy-to-use tool to ensure image metadata (EXIF data and extended attributes) is removed."
 readme = "README.md"
 keywords = [
   "exif",
