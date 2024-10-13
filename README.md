@@ -48,7 +48,7 @@
 
 # exif-stripper
 
-An easy-to-use tool to ensure image metadata (EXIF data and extended attributes) is removed.
+An easy-to-use tool to ensure image metadata (EXIF data and extended attributes) is removed. Read more about why this is important [here](https://stefaniemolin.com/articles/devx/pre-commit/exif-stripper/).
 
 ## Usage
 
