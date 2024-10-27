@@ -42,7 +42,7 @@
      </td>
    </tr>
   </table>
-  
+
   <hr>
 </div>
 
@@ -58,7 +58,7 @@ Add the following to your `.pre-commit-config.yaml` file:
 
 ```yaml
 - repo: https://github.com/stefmolin/exif-stripper
-  rev: 0.4.0
+  rev: 0.5.0
   hooks:
     - id: strip-exif
 ```
