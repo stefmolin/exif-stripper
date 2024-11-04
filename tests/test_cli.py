@@ -13,6 +13,7 @@ from exif_stripper import cli
 
 RUNNING_ON = platform.system()
 RUNNING_ON_WINDOWS = RUNNING_ON == 'Windows'
+RUNNING_ON_MACOS = RUNNING_ON == 'Darwin'
 
 if not RUNNING_ON_WINDOWS:
     from xattr import xattr
@@ -51,7 +52,16 @@ def has_metadata(filepath, on_windows):
         has_exif = dict(im.getexif()) != {}
         if on_windows:
             return has_exif
-        return has_exif or xattr(filepath).list()
+
+        xattr_list = xattr(filepath).list()
+        if RUNNING_ON_MACOS:
+            has_removable_xattr = any(
+                not attr.startswith('com.apple.') for attr in xattr_list
+            )
+        else:
+            has_removable_xattr = bool(xattr_list)
+
+        return has_exif or has_removable_xattr
 
 
 def assert_metadata_stripped(filepath, on_windows=RUNNING_ON_WINDOWS):

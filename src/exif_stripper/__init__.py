@@ -37,12 +37,28 @@ def process_image(filename: str | os.PathLike) -> bool:
     else:
         # remove extended attributes (Unix only)
         if platform.system() != 'Windows':
+            import warnings
+
             from xattr import xattr
 
             xattr_obj = xattr(filename)
-            if xattr_obj.list():
+            xattr_list = xattr_obj.list()
+
+            if xattr_list:
+                original_xattr_list = xattr_list[:]
+
                 xattr_obj.clear()
-                has_changed = True
+
+                xattr_obj = xattr(filename)
+                xattr_list = xattr_obj.list()
+
+                has_changed |= set(xattr_list) != set(original_xattr_list)
+                if xattr_list:
+                    xattr_list_str = ', '.join(xattr_list)
+                    warnings.warn(
+                        f'Extended attributes {xattr_list_str} in {filename} cannot be removed.',
+                        stacklevel=2,
+                    )
 
     if has_changed:
         print(f'Stripped metadata from {filename}')
