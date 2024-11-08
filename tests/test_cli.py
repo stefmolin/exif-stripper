@@ -78,15 +78,24 @@ def assert_metadata_stripped(filepath, on_windows=RUNNING_ON_WINDOWS):
 
 
 @pytest.mark.skipif(RUNNING_ON_WINDOWS, reason='xattr does not work on Windows')
-def test_process_image_full(image_with_metadata, monkeypatch):
+def test_process_image_full(image_with_metadata, monkeypatch, recwarn):
     """Test that cli.process_image() removes EXIF and extended attributes."""
+
     assert_metadata_stripped(image_with_metadata)
+
+    # Unremovable attributes may not be present in all system setups.
+    # This is to assert the warning message if the user has such system configurations.
+    if recwarn:
+        message = str(recwarn[0].message)
+        assert message.startswith('Extended attributes')
+        assert message.endswith('cannot be removed.')
 
 
 def test_process_image_exif_only(image_with_exif_data, monkeypatch):
     """Test that cli.process_image() removes EXIF only (Windows version)."""
     if not RUNNING_ON_WINDOWS:
         monkeypatch.setattr(platform, 'system', lambda: 'Windows')
+
     assert_metadata_stripped(image_with_exif_data, on_windows=True)
 
 
