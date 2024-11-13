@@ -7,7 +7,7 @@ from typing import Sequence
 
 from . import __version__, process_image
 
-PROG = 'strip-exif'
+PROG = 'exif-stripper'
 
 
 def main(argv: Sequence[str] | None = None) -> int:

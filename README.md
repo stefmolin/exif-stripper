@@ -73,13 +73,13 @@ First, install the `exif-stripper` package from PyPI:
 $ python -m pip install exif-stripper
 ```
 
-Then, use the `strip-exif` entry point on the file(s) of your choice:
+Then, use the `exif-stripper` entry point on the file(s) of your choice (use `strip-exif` for versions before 0.6.0):
 
 ```shell
-$ strip-exif /path/to/file [/path/to/another/file]
+$ exif-stripper /path/to/file [/path/to/another/file]
 ```
 
-Run `strip-exif --help` for more information.
+Run `exif-stripper --help` for more information.
 
 ### Python
 
