@@ -8,7 +8,7 @@ requires = [
 
 [project]
 name = "exif-stripper"
-description = "An easy-to-use tool to ensure image metadata (EXIF data and extended attributes) is removed."
+description = "An easy-to-use tool to ensure image EXIF metadata is removed."
 readme = "README.md"
 keywords = [
   "exif",
@@ -18,7 +18,7 @@ keywords = [
 ]
 license = { file = "LICENSE" }
 authors = [
-  { name = "Stefanie Molin", email = "24376333+stefmolin@users.noreply.github.com" },
+  { name = "Stefanie Molin", email = "exif-stripper@stefaniemolin.com" },
 ]
 requires-python = ">=3.8"
 classifiers = [
@@ -39,7 +39,6 @@ dynamic = [
 
 dependencies = [
   "pillow>=10.3.0",
-  "xattr; platform_system!='Windows'",
 ]
 optional-dependencies.dev = [
   "pre-commit",

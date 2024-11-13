@@ -1,22 +1,12 @@
 """Test the CLI."""
 
-import platform
 import subprocess
 import sys
-from contextlib import suppress
-from getpass import getuser
 
 import pytest
 from PIL import Image
 
 from exif_stripper import cli
-
-RUNNING_ON = platform.system()
-RUNNING_ON_WINDOWS = RUNNING_ON == 'Windows'
-RUNNING_ON_MACOS = RUNNING_ON == 'Darwin'
-
-if not RUNNING_ON_WINDOWS:
-    from xattr import xattr
 
 
 @pytest.fixture
@@ -31,72 +21,23 @@ def image_with_exif_data(tmp_path):
     return image_file
 
 
-@pytest.fixture
-def image_with_metadata(image_with_exif_data):
-    """Fixture for an image with metadata."""
-    if RUNNING_ON in ['Darwin', 'Linux']:
-        with suppress(OSError):
-            # OSError raised if filesystem does not support extended attributes
-            xattr(image_with_exif_data).set(
-                f'{getuser()}.test_extended_attribute'
-                if RUNNING_ON == 'Linux'
-                else 'com.apple.macl',
-                b'\x00',
-            )
-    return image_with_exif_data
-
-
-def has_metadata(filepath, on_windows):
+def has_metadata(filepath) -> bool:
     """Utility to check if a file has metadata."""
     with Image.open(filepath) as im:
-        has_exif = dict(im.getexif()) != {}
-        if on_windows:
-            return has_exif
-
-        xattr_list = xattr(filepath).list()
-        if RUNNING_ON_MACOS:
-            has_removable_xattr = any(
-                not attr.startswith('com.apple.') for attr in xattr_list
-            )
-        else:
-            has_removable_xattr = bool(xattr_list)
-
-        return has_exif or has_removable_xattr
+        return bool(im.getexif())
 
 
-def assert_metadata_stripped(filepath, on_windows=RUNNING_ON_WINDOWS):
-    """Checks that a file that had metadata before no longer does."""
-    assert has_metadata(filepath, on_windows)
+def test_process_image_full(image_with_exif_data, monkeypatch):
+    """Test that cli.process_image() removes EXIF metadata."""
+    assert has_metadata(image_with_exif_data)
 
-    has_changed = cli.process_image(filepath)
+    has_changed = cli.process_image(image_with_exif_data)
 
-    assert not has_metadata(filepath, on_windows)
+    assert not has_metadata(image_with_exif_data)
     assert has_changed
 
-    has_changed = cli.process_image(filepath)
+    has_changed = cli.process_image(image_with_exif_data)
     assert not has_changed
-
-
-@pytest.mark.skipif(RUNNING_ON_WINDOWS, reason='xattr does not work on Windows')
-def test_process_image_full(image_with_metadata, monkeypatch, recwarn):
-    """Test that cli.process_image() removes EXIF and extended attributes."""
-
-    assert_metadata_stripped(image_with_metadata)
-
-    # Unremovable attributes may not be present in all system setups.
-    # This is to assert the warning message if the user has such system configurations.
-    if recwarn:
-        message = str(recwarn[0].message)  # pragma: no cover
-        assert message.startswith('Extended attributes')  # pragma: no cover
-        assert message.endswith('cannot be removed.')  # pragma: no cover
-
-
-def test_process_image_exif_only(image_with_exif_data, monkeypatch):
-    """Test that cli.process_image() removes EXIF only (Windows version)."""
-    if not RUNNING_ON_WINDOWS:
-        monkeypatch.setattr(platform, 'system', lambda: 'Windows')
-
-    assert_metadata_stripped(image_with_exif_data, on_windows=True)
 
 
 @pytest.mark.parametrize('exists', [True, False])
@@ -110,16 +51,16 @@ def test_process_image_file_issues(tmp_path, exists):
     assert not has_changed
 
 
-def test_main(tmp_path, image_with_metadata, capsys):
+def test_main(tmp_path, image_with_exif_data, capsys):
     """Test that cli.main() returns the number of files altered."""
     file_without_metadata = tmp_path / 'clean.png'
     file_without_metadata.touch()
 
-    files_changed = cli.main([str(file_without_metadata), str(image_with_metadata)])
+    files_changed = cli.main([str(file_without_metadata), str(image_with_exif_data)])
 
     assert files_changed == 1
 
-    assert capsys.readouterr().out.strip().endswith(str(image_with_metadata))
+    assert capsys.readouterr().out.strip().endswith(str(image_with_exif_data))
 
 
 def test_cli_version(capsys):
@@ -130,9 +71,9 @@ def test_cli_version(capsys):
 
 
 @pytest.mark.parametrize(['flag', 'return_code'], [['--version', 0], ['', 1]])
-def test_main_access_cli(flag, return_code, image_with_metadata):
+def test_main_access_cli(flag, return_code, image_with_exif_data):
     """Confirm that CLI can be accessed via python -m."""
     result = subprocess.run(
-        [sys.executable, '-m', 'exif_stripper.cli', flag or str(image_with_metadata)]
+        [sys.executable, '-m', 'exif_stripper.cli', flag or str(image_with_exif_data)]
     )
     assert result.returncode == return_code
