@@ -86,9 +86,9 @@ def test_process_image_full(image_with_metadata, monkeypatch, recwarn):
     # Unremovable attributes may not be present in all system setups.
     # This is to assert the warning message if the user has such system configurations.
     if recwarn:
-        message = str(recwarn[0].message)
-        assert message.startswith('Extended attributes')
-        assert message.endswith('cannot be removed.')
+        message = str(recwarn[0].message)  # pragma: no cover
+        assert message.startswith('Extended attributes')  # pragma: no cover
+        assert message.endswith('cannot be removed.')  # pragma: no cover
 
 
 def test_process_image_exif_only(image_with_exif_data, monkeypatch):
