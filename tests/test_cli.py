@@ -13,6 +13,7 @@ from exif_stripper import cli
 
 RUNNING_ON = platform.system()
 RUNNING_ON_WINDOWS = RUNNING_ON == 'Windows'
+RUNNING_ON_MACOS = RUNNING_ON == 'Darwin'
 
 if not RUNNING_ON_WINDOWS:
     from xattr import xattr
@@ -51,7 +52,16 @@ def has_metadata(filepath, on_windows):
         has_exif = dict(im.getexif()) != {}
         if on_windows:
             return has_exif
-        return has_exif or xattr(filepath).list()
+
+        xattr_list = xattr(filepath).list()
+        if RUNNING_ON_MACOS:
+            has_removable_xattr = any(
+                not attr.startswith('com.apple.') for attr in xattr_list
+            )
+        else:
+            has_removable_xattr = bool(xattr_list)
+
+        return has_exif or has_removable_xattr
 
 
 def assert_metadata_stripped(filepath, on_windows=RUNNING_ON_WINDOWS):
@@ -68,15 +78,24 @@ def assert_metadata_stripped(filepath, on_windows=RUNNING_ON_WINDOWS):
 
 
 @pytest.mark.skipif(RUNNING_ON_WINDOWS, reason='xattr does not work on Windows')
-def test_process_image_full(image_with_metadata, monkeypatch):
+def test_process_image_full(image_with_metadata, monkeypatch, recwarn):
     """Test that cli.process_image() removes EXIF and extended attributes."""
+
     assert_metadata_stripped(image_with_metadata)
+
+    # Unremovable attributes may not be present in all system setups.
+    # This is to assert the warning message if the user has such system configurations.
+    if recwarn:
+        message = str(recwarn[0].message)  # pragma: no cover
+        assert message.startswith('Extended attributes')  # pragma: no cover
+        assert message.endswith('cannot be removed.')  # pragma: no cover
 
 
 def test_process_image_exif_only(image_with_exif_data, monkeypatch):
     """Test that cli.process_image() removes EXIF only (Windows version)."""
     if not RUNNING_ON_WINDOWS:
         monkeypatch.setattr(platform, 'system', lambda: 'Windows')
+
     assert_metadata_stripped(image_with_exif_data, on_windows=True)
 
 
