@@ -26,10 +26,10 @@ def process_image(filename: str | os.PathLike) -> bool:
     """
     with suppress(FileNotFoundError, UnidentifiedImageError), Image.open(
         filename
-    ) as im:
-        if exif := im.getexif():
+    ) as image:
+        if exif := image.getexif():
             exif.clear()
-            im.save(filename)
+            image.save(filename)
             print(f'Stripped EXIF metadata from {filename}')
             return True
     return False
