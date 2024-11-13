@@ -7,7 +7,7 @@ import platform
 
 from PIL import Image, UnidentifiedImageError
 
-__version__ = '0.5.0'
+__version__ = '0.5.1'
 
 
 def process_image(filename: str | os.PathLike) -> bool:
