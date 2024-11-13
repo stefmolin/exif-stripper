@@ -7,7 +7,7 @@ from contextlib import suppress
 
 from PIL import Image, UnidentifiedImageError
 
-__version__ = '0.5.1'
+__version__ = '0.6.0'
 
 
 def process_image(filename: str | os.PathLike) -> bool:
