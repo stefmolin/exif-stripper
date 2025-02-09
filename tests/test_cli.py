@@ -70,7 +70,7 @@ def test_cli_version(capsys):
     assert f'{cli.PROG} {cli.__version__}' == capsys.readouterr().out.strip()
 
 
-@pytest.mark.parametrize(['flag', 'return_code'], [['--version', 0], ['', 1]])
+@pytest.mark.parametrize(('flag', 'return_code'), [('--version', 0), ('', 1)])
 def test_main_access_cli(flag, return_code, image_with_exif_data):
     """Confirm that CLI can be accessed via python -m."""
     result = subprocess.run(
