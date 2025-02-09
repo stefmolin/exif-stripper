@@ -2,10 +2,13 @@
 
 from __future__ import annotations
 
-import os
 from contextlib import suppress
+from typing import TYPE_CHECKING
 
 from PIL import Image, UnidentifiedImageError
+
+if TYPE_CHECKING:
+    import os
 
 __version__ = '0.6.1'
 
