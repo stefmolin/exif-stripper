@@ -48,6 +48,7 @@ optional-dependencies.dev = [
 ]
 urls.Documentation = "https://github.com/stefmolin/exif-stripper"
 urls.Homepage = "https://github.com/stefmolin/exif-stripper"
+urls.Source = "https://github.com/stefmolin/exif-stripper"
 scripts.exif-stripper = "exif_stripper.cli:main"
 
 [tool.setuptools.packages.find]
