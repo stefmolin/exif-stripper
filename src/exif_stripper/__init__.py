@@ -10,7 +10,7 @@ from PIL import Image, UnidentifiedImageError
 if TYPE_CHECKING:
     import os
 
-__version__ = '0.6.1'
+__version__ = '0.6.2'
 
 
 def process_image(filename: str | os.PathLike) -> bool:
