@@ -100,4 +100,4 @@ process_image('/path/to/image')
 
 ## Contributing
 
-Please consult the [contributing guidelines](CONTRIBUTING.md).
+Please consult the [contributing guidelines](https://github.com/stefmolin/exif-stripper/blob/main/CONTRIBUTING.md).
