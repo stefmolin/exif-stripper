@@ -27,9 +27,10 @@ def process_image(filename: str | os.PathLike) -> bool:
     bool
         Indicator of whether metadata was stripped.
     """
-    with suppress(FileNotFoundError, UnidentifiedImageError), Image.open(
-        filename
-    ) as image:
+    with (
+        suppress(FileNotFoundError, UnidentifiedImageError),
+        Image.open(filename) as image,
+    ):
         if exif := image.getexif():
             exif.clear()
             image.save(filename)
