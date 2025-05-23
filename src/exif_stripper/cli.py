@@ -3,9 +3,12 @@
 from __future__ import annotations
 
 import argparse
-from typing import Sequence
+from typing import TYPE_CHECKING
 
 from . import __version__, process_image
+
+if TYPE_CHECKING:
+    from collections.abc import Sequence
 
 PROG = 'exif-stripper'
 
