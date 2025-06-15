@@ -5,7 +5,7 @@ requires = [ "hatchling" ]
 
 [project]
 name = "exif-stripper"
-version = "0.6.2"
+version = "1.0.0"
 description = "An easy-to-use tool to ensure image EXIF metadata is removed."
 readme = "README.md"
 keywords = [
