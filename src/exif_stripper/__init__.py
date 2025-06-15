@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import importlib.metadata
 from contextlib import suppress
 from typing import TYPE_CHECKING
 
@@ -10,7 +11,7 @@ from PIL import Image, UnidentifiedImageError
 if TYPE_CHECKING:
     import os
 
-__version__ = '0.6.2'
+__version__ = importlib.metadata.version(__name__)
 
 
 def process_image(filename: str | os.PathLike) -> bool:

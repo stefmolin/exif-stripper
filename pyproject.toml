@@ -1,13 +1,11 @@
 [build-system]
-build-backend = "setuptools.build_meta"
+build-backend = "hatchling.build"
 
-requires = [
-  "setuptools",
-  "setuptools-scm",
-]
+requires = [ "hatchling" ]
 
 [project]
 name = "exif-stripper"
+version = "0.6.2"
 description = "An easy-to-use tool to ensure image EXIF metadata is removed."
 readme = "README.md"
 keywords = [
@@ -32,9 +30,6 @@ classifiers = [
   "Programming Language :: Python :: 3.12",
   "Programming Language :: Python :: 3.13",
 ]
-dynamic = [
-  "version",
-]
 
 dependencies = [
   "pillow>=10.3.0",
@@ -53,14 +48,6 @@ test = [
   "pytest-cov>=4.1.0",
   "pytest-randomly>=3.12.0",
 ]
-
-[tool.setuptools.packages.find]
-where = [
-  "src",
-]
-
-[tool.setuptools.dynamic]
-version = { attr = "exif_stripper.__version__" }
 
 [tool.ruff]
 line-length = 88
