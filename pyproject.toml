@@ -32,7 +32,7 @@ classifiers = [
 ]
 
 dependencies = [
-  "pillow>=10.3.0",
+  "pillow>=11.0.0",  # Python 3.9 - 3.13 (https://pillow.readthedocs.io/en/stable/installation/python-support.html)
 ]
 
 urls.Documentation = "https://github.com/stefmolin/exif-stripper"
