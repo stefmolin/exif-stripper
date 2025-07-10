@@ -9,10 +9,19 @@ class FieldGroup(StrEnum):
     """Enum for groups of fields to target."""
 
     ALL = auto()
+    """Field group for deleting all EXIF metadata."""
+
     CAMERA = auto()
+    """Field group for EXIF tags containing the make and model of the camera."""
+
     GPS = auto()
+    """Field group for all GPS information in EXIF metadata."""
+
     LENS = auto()
+    """Field group for EXIF tags containing the make and model of the lens."""
+
     SERIALS = auto()
+    """Field group for EXIF tags containing serial numbers."""
 
 
 # References for EXIF tags:
