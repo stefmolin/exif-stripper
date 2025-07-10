@@ -7,6 +7,8 @@ import pytest
 from PIL import ExifTags, Image
 
 from exif_stripper import cli
+from exif_stripper.exceptions import UnknownFieldError
+from exif_stripper.fields import FieldGroup
 
 
 @pytest.fixture
@@ -34,26 +36,33 @@ def has_metadata(filepath, gps_only) -> bool:
 @pytest.mark.parametrize('gps_only', [True, False])
 def test_process_image_full(monkeypatch, image_with_exif_data, gps_only):
     """Test that cli.process_image() removes the appropriate EXIF metadata."""
+    fields = [FieldGroup.GPS] if gps_only else [FieldGroup.ALL]
+
     assert has_metadata(image_with_exif_data, gps_only=False)
 
-    has_changed = cli.process_image(image_with_exif_data, gps_only=gps_only)
+    has_changed = cli.process_image(image_with_exif_data, fields=fields)
 
     assert not has_metadata(image_with_exif_data, gps_only=gps_only)
     assert has_changed
 
-    has_changed = cli.process_image(image_with_exif_data, gps_only=gps_only)
+    has_changed = cli.process_image(image_with_exif_data, fields=fields)
     assert not has_changed
 
 
+def test_process_image_with_bad_field(image_with_exif_data):
+    """Test that cli.process_image() raises an exception when provided with invalid fields."""
+    with pytest.raises(UnknownFieldError):
+        cli.process_image(image_with_exif_data, fields=['garbage'])
+
+
 @pytest.mark.parametrize('exists', [True, False])
-@pytest.mark.parametrize('gps_only', [True, False])
-def test_process_image_file_issues(tmp_path, exists, gps_only):
+def test_process_image_file_issues(tmp_path, exists):
     """Test that cli.process_image() continues if files don't exist or aren't images."""
     file = tmp_path / 'test.txt'
     if exists:
         file.touch()
 
-    has_changed = cli.process_image(file, gps_only)
+    has_changed = cli.process_image(file)
     assert not has_changed
 
 
@@ -65,7 +74,7 @@ def test_main(capsys, tmp_path, image_with_exif_data, gps_only):
 
     cli_args = [str(file_without_metadata), str(image_with_exif_data)]
     if gps_only:
-        cli_args = ['--gps-only', *cli_args]
+        cli_args = ['--fields=gps', *cli_args]
 
     files_changed = cli.main(cli_args)
 
