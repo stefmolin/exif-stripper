@@ -32,14 +32,20 @@ def main(argv: Sequence[str] | None = None) -> int:
     parser.add_argument(
         'filenames',
         nargs='*',
-        help='Filenames to process.',
+        help='filenames to process',
     )
     parser.add_argument(
         '--version', action='version', version=f'%(prog)s {__version__}'
     )
+
+    exif_options_group = parser.add_argument_group('data selection')
+    exif_options_group.add_argument(
+        '--gps-only', action='store_true', help='whether to only remove GPS metadata'
+    )
+
     args = parser.parse_args(argv)
 
-    results = [process_image(filename) for filename in args.filenames]
+    results = [process_image(filename, args.gps_only) for filename in args.filenames]
     return int(any(results))
 
 

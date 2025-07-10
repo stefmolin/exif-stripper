@@ -142,7 +142,7 @@ test = [
 ]
 
 [package.metadata]
-requires-dist = [{ name = "pillow", specifier = ">=10.3.0" }]
+requires-dist = [{ name = "pillow", specifier = ">=11.0.0" }]
 
 [package.metadata.requires-dev]
 dev = [
