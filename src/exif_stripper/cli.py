@@ -45,7 +45,10 @@ def main(argv: Sequence[str] | None = None) -> int:
         nargs='+',
         choices=list(FieldGroup),
         default=FieldGroup.ALL,
-        help='the fields to remove from the EXIF metadata (all are removed by default)',
+        help=(
+            'The fields to remove from the EXIF metadata. '
+            'By default, all EXIF metadata is removed.'
+        ),
     )
 
     args = parser.parse_args(argv)
