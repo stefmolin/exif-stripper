@@ -1,0 +1,45 @@
+"""EXIF metadata fields."""
+
+from enum import IntEnum, StrEnum, auto
+
+from PIL import ExifTags
+
+
+class FieldGroup(StrEnum):
+    """Enum for groups of fields to target."""
+
+    ALL = auto()
+    """Field group for deleting all EXIF metadata."""
+
+    CAMERA = auto()
+    """Field group for EXIF tags containing the make and model of the camera."""
+
+    GPS = auto()
+    """Field group for all GPS information in EXIF metadata."""
+
+    LENS = auto()
+    """Field group for EXIF tags containing the make and model of the lens."""
+
+    SERIALS = auto()
+    """Field group for EXIF tags containing serial numbers."""
+
+
+# References for EXIF tags:
+# - meanings: https://exiv2.org/tags.html
+# - enums: https://pillow.readthedocs.io/en/stable/_modules/PIL/ExifTags.html
+FIELDS: dict[FieldGroup, tuple[IntEnum]] = {
+    FieldGroup.CAMERA: (
+        ExifTags.Base.Make,
+        ExifTags.Base.Model,
+        ExifTags.Base.MakerNote,
+        ExifTags.Base.MakerNoteSafety,
+    ),
+    FieldGroup.GPS: (ExifTags.IFD.GPSInfo,),
+    FieldGroup.LENS: (ExifTags.Base.LensMake, ExifTags.Base.LensModel),
+    FieldGroup.SERIALS: (
+        ExifTags.Base.BodySerialNumber,
+        ExifTags.Base.CameraSerialNumber,
+        ExifTags.Base.LensSerialNumber,
+    ),
+}
+"""Mapping of FieldGroup to the corresponding locations in the EXIF metadata."""

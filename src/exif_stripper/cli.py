@@ -5,7 +5,7 @@ from __future__ import annotations
 import argparse
 from typing import TYPE_CHECKING
 
-from . import __version__, process_image
+from . import FieldGroup, __version__, process_image
 
 if TYPE_CHECKING:
     from collections.abc import Sequence
@@ -31,15 +31,29 @@ def main(argv: Sequence[str] | None = None) -> int:
     parser = argparse.ArgumentParser(prog=PROG)
     parser.add_argument(
         'filenames',
-        nargs='*',
-        help='Filenames to process.',
+        nargs='+',
+        metavar='filename',
+        help='filename to process',
     )
     parser.add_argument(
         '--version', action='version', version=f'%(prog)s {__version__}'
     )
+
+    exif_options_group = parser.add_argument_group('data selection')
+    exif_options_group.add_argument(
+        '--fields',
+        nargs='+',
+        choices=list(FieldGroup),
+        default=FieldGroup.ALL,
+        help=(
+            'The fields to remove from the EXIF metadata. '
+            'By default, all EXIF metadata is removed.'
+        ),
+    )
+
     args = parser.parse_args(argv)
 
-    results = [process_image(filename) for filename in args.filenames]
+    results = [process_image(filename, args.fields) for filename in args.filenames]
     return int(any(results))
 
 
