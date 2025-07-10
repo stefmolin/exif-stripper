@@ -1,11 +1,11 @@
-"""Exceptions for exif-stripper."""
+"""Exceptions for exif_stripper."""
 
 from enum import StrEnum
 
 
 class UnknownFieldError(ValueError):
     """
-    EXIF field is unknown to exif-stripper.
+    EXIF field is unknown to exif_stripper.
 
     Parameters
     ----------

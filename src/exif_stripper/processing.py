@@ -1,4 +1,4 @@
-"""Image processing for exif-stripper."""
+"""Image processing for exif_stripper."""
 
 from __future__ import annotations
 
