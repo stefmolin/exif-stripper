@@ -70,7 +70,7 @@ If you only want to remove certain fields, use the `--fields` argument. Note tha
   rev: 1.1.0
   hooks:
     - id: strip-exif
-      args: [--fields, gps]
+      args: [--fields=gps]
 ```
 
 Be sure to check out the [pre-commit documentation](https://pre-commit.com/#pre-commit-configyaml---hooks) for additional configuration options.
