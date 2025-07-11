@@ -85,6 +85,7 @@ lint.isort.known-first-party = [
 ]
 
 [tool.pytest.ini_options]
+filterwarnings = [ "error" ]
 addopts = [
   "-ra",
   "-l",
