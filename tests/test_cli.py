@@ -6,9 +6,7 @@ import sys
 import pytest
 
 from exif_stripper import cli
-from exif_stripper.fields import (
-    FieldGroup,
-)
+from exif_stripper.fields import FieldGroup
 
 from .common import has_expected_metadata
 
