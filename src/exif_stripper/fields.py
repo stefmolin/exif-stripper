@@ -27,7 +27,7 @@ class FieldGroup(StrEnum):
 # References for EXIF tags:
 # - meanings: https://exiv2.org/tags.html
 # - enums: https://pillow.readthedocs.io/en/stable/_modules/PIL/ExifTags.html
-FIELDS: dict[FieldGroup, tuple[IntEnum]] = {
+EXIF_TAG_MAPPING: dict[FieldGroup, tuple[IntEnum]] = {
     FieldGroup.CAMERA: (
         ExifTags.Base.Make,
         ExifTags.Base.Model,
@@ -43,3 +43,16 @@ FIELDS: dict[FieldGroup, tuple[IntEnum]] = {
     ),
 }
 """Mapping of FieldGroup to the corresponding locations in the EXIF metadata."""
+
+
+PRESERVE_FIELDS: tuple[IntEnum] = (
+    ExifTags.Base.InterColorProfile,
+    ExifTags.Base.Orientation,
+)
+"""Locations of EXIF information that should be preserved."""
+
+OWNERSHIP_FIELDS: tuple[IntEnum] = (
+    ExifTags.Base.Artist,
+    ExifTags.Base.Copyright,
+)
+"""Locations of EXIF information related to copyright/ownership."""
