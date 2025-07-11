@@ -78,7 +78,7 @@ def test_process_image_does_not_always_rewrite(capsys, image_with_exif_data):
 
 
 def test_process_image_does_nothing_when_there_is_no_exif_data(
-    capsys, mocker, image_without_exif_data
+    capsys, image_without_exif_data
 ):
     """Test that process_image() does nothing when the file has no EXIF data."""
     has_changed = process_image(image_without_exif_data)
