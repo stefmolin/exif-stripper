@@ -5,7 +5,7 @@ requires = [ "hatchling" ]
 
 [project]
 name = "exif-stripper"
-version = "1.0.0"
+version = "1.1.0"
 description = "An easy-to-use tool to ensure image EXIF metadata is removed."
 readme = "README.md"
 keywords = [
@@ -14,13 +14,14 @@ keywords = [
   "metadata",
   "pre-commit",
 ]
-license = { file = "LICENSE" }
+license = "Apache-2.0"
+license-files = [ "LICENSE" ]
 authors = [
   { name = "Stefanie Molin", email = "exif-stripper@stefaniemolin.com" },
 ]
 requires-python = ">=3.11"
 classifiers = [
-  "Development Status :: 4 - Beta",
+  "Development Status :: 5 - Production/Stable",
   "License :: OSI Approved :: Apache Software License",
   "Programming Language :: Python",
   "Programming Language :: Python :: 3 :: Only",

@@ -58,9 +58,19 @@ Add the following to your `.pre-commit-config.yaml` file:
 
 ```yaml
 - repo: https://github.com/stefmolin/exif-stripper
-  rev: 1.0.0
+  rev: 1.1.0
   hooks:
     - id: strip-exif
+```
+
+If you only want to remove certain fields, use the `--fields` argument. Note that this argument supports multiple options, which are shown when running `exif-stripper --help`. Be very careful when doing this as you might be leaving some sensitive information behind. Here, we only remove GPS information:
+
+```yaml
+- repo: https://github.com/stefmolin/exif-stripper
+  rev: 1.1.0
+  hooks:
+    - id: strip-exif
+      args: [--fields=gps]
 ```
 
 Be sure to check out the [pre-commit documentation](https://pre-commit.com/#pre-commit-configyaml---hooks) for additional configuration options.
