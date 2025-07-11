@@ -43,8 +43,8 @@ def main(argv: Sequence[str] | None = None) -> int:
     exif_options_group.add_argument(
         '--fields',
         nargs='+',
-        choices=list(FieldGroup),
-        default=FieldGroup.ALL,
+        choices=[group for group in FieldGroup if group != FieldGroup.COPYRIGHT],
+        default=(FieldGroup.ALL,),
         help=(
             'The fields to remove from the EXIF metadata. By default, all EXIF metadata '
             'that can safely be deleted is removed.'
@@ -52,8 +52,7 @@ def main(argv: Sequence[str] | None = None) -> int:
     )
     exif_options_group.add_argument(
         '--remove-copyright',
-        action='store_false',
-        dest='preserve_copyright',
+        action='store_true',
         help=(
             'Whether to remove the image copyright information. '
             'By default, the artist and copyright tags will be preserved, if present.'
@@ -62,10 +61,11 @@ def main(argv: Sequence[str] | None = None) -> int:
 
     args = parser.parse_args(argv)
 
-    results = [
-        process_image(filename, args.fields, args.preserve_copyright)
-        for filename in args.filenames
-    ]
+    fields = args.fields
+    if args.remove_copyright:
+        fields = [*fields, FieldGroup.COPYRIGHT]
+
+    results = [process_image(filename, fields=fields) for filename in args.filenames]
     return int(any(results))
 
 

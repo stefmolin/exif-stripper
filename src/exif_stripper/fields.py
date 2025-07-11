@@ -4,6 +4,18 @@ from enum import IntEnum, StrEnum, auto
 
 from PIL import ExifTags
 
+PRESERVE_FIELDS: tuple[IntEnum] = (
+    ExifTags.Base.InterColorProfile,
+    ExifTags.Base.Orientation,
+)
+"""Locations of EXIF information that should be preserved."""
+
+OWNERSHIP_FIELDS: tuple[IntEnum] = (
+    ExifTags.Base.Artist,
+    ExifTags.Base.Copyright,
+)
+"""Locations of EXIF information related to copyright/ownership."""
+
 
 class FieldGroup(StrEnum):
     """Enum for groups of fields to target."""
@@ -13,6 +25,9 @@ class FieldGroup(StrEnum):
 
     CAMERA = auto()
     """Field group for EXIF tags containing the make and model of the camera."""
+
+    COPYRIGHT = auto()
+    """Field group for EXIF tags related to the creator of the image."""
 
     GPS = auto()
     """Field group for all GPS information in EXIF metadata."""
@@ -34,6 +49,7 @@ EXIF_TAG_MAPPING: dict[FieldGroup, tuple[IntEnum]] = {
         ExifTags.Base.MakerNote,
         ExifTags.Base.MakerNoteSafety,
     ),
+    FieldGroup.COPYRIGHT: OWNERSHIP_FIELDS,
     FieldGroup.GPS: (ExifTags.IFD.GPSInfo,),
     FieldGroup.LENS: (ExifTags.Base.LensMake, ExifTags.Base.LensModel),
     FieldGroup.SERIALS: (
@@ -43,16 +59,3 @@ EXIF_TAG_MAPPING: dict[FieldGroup, tuple[IntEnum]] = {
     ),
 }
 """Mapping of FieldGroup to the corresponding locations in the EXIF metadata."""
-
-
-PRESERVE_FIELDS: tuple[IntEnum] = (
-    ExifTags.Base.InterColorProfile,
-    ExifTags.Base.Orientation,
-)
-"""Locations of EXIF information that should be preserved."""
-
-OWNERSHIP_FIELDS: tuple[IntEnum] = (
-    ExifTags.Base.Artist,
-    ExifTags.Base.Copyright,
-)
-"""Locations of EXIF information related to copyright/ownership."""

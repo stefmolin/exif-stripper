@@ -20,7 +20,6 @@ if TYPE_CHECKING:
 def process_image(
     filename: str | os.PathLike,
     fields: Sequence[FieldGroup] = (FieldGroup.ALL,),
-    preserve_copyright: bool = True,
 ) -> bool:
     """
     Process image EXIF metadata.
@@ -31,8 +30,6 @@ def process_image(
         The image file to check.
     fields : Sequence[FieldGroup], default ``(FieldGroup.ALL,)``
        The group of fields to check for and remove, if present.
-    preserve_copyright : bool, default ``True``
-        Whether to preserve the copyright metadata, if present.
 
     Returns
     -------
@@ -53,7 +50,8 @@ def process_image(
             fields_to_preserve = {
                 location: value
                 for location in itertools.chain(
-                    PRESERVE_FIELDS, OWNERSHIP_FIELDS if preserve_copyright else {}
+                    PRESERVE_FIELDS,
+                    OWNERSHIP_FIELDS if FieldGroup.COPYRIGHT not in fields else {},
                 )
                 if (value := exif.get(location))
             }

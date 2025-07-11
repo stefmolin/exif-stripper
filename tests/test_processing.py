@@ -13,35 +13,30 @@ from .common import has_expected_metadata
     ('fields', 'preserve_copyright'),
     [
         ([FieldGroup.ALL], True),
-        ([FieldGroup.ALL, FieldGroup.GPS], False),
-        ([FieldGroup.GPS], None),
-        ([FieldGroup.CAMERA, FieldGroup.LENS, FieldGroup.SERIALS], None),
+        ([FieldGroup.ALL, FieldGroup.GPS, FieldGroup.COPYRIGHT], False),
+        ([FieldGroup.GPS, FieldGroup.COPYRIGHT], False),
+        ([FieldGroup.CAMERA, FieldGroup.LENS, FieldGroup.SERIALS], True),
     ],
 )
 def test_process_image_full(
     capsys, monkeypatch, image_with_full_exif_data, fields, preserve_copyright
 ):
     """Test that process_image() removes the appropriate EXIF metadata."""
-    call_kwargs = {'fields': fields}
-    if preserve_copyright is not None:
-        call_kwargs['preserve_copyright'] = preserve_copyright
-
     assert has_expected_metadata(
         image_with_full_exif_data, fields, has_copyright=True, was_stripped=False
     )
 
-    has_changed = process_image(image_with_full_exif_data, **call_kwargs)
-    should_have_copyright = preserve_copyright is not False
+    has_changed = process_image(image_with_full_exif_data, fields=fields)
 
     assert has_expected_metadata(
         image_with_full_exif_data,
         fields,
-        has_copyright=should_have_copyright,
+        has_copyright=preserve_copyright,
         was_stripped=True,
     )
     assert has_changed
 
-    has_changed = process_image(image_with_full_exif_data, **call_kwargs)
+    has_changed = process_image(image_with_full_exif_data, fields=fields)
     assert not has_changed
 
     # make sure that the other fields haven't been touched
@@ -53,7 +48,7 @@ def test_process_image_full(
         assert has_expected_metadata(
             image_with_full_exif_data,
             expected_untouched_groups,
-            has_copyright=should_have_copyright,
+            has_copyright=preserve_copyright,
             was_stripped=False,
         )
 

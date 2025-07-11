@@ -19,7 +19,7 @@ from .common import has_expected_metadata
         (None, None),
         ([FieldGroup.ALL], True),
         ([FieldGroup.ALL, FieldGroup.GPS], False),
-        ([FieldGroup.GPS], None),
+        ([FieldGroup.GPS], True),
         ([FieldGroup.CAMERA, FieldGroup.LENS, FieldGroup.SERIALS], None),
     ],
 )
@@ -69,3 +69,10 @@ def test_main_access_cli(flag, return_code, image_with_full_exif_data):
         ]
     )
     assert result.returncode == return_code
+
+
+def test_cli_fields(capsys, image_with_full_exif_data):
+    """Confirm that copyright isn't allowed as a field to remove on its own via the CLI."""
+    with pytest.raises(SystemExit, match='2'):
+        cli.main(['--fields', 'copyright', str(image_with_full_exif_data)])
+    assert 'invalid choice' in capsys.readouterr().err.strip()
