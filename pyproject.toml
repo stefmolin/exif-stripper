@@ -27,10 +27,11 @@ classifiers = [
   "Programming Language :: Python :: 3.11",
   "Programming Language :: Python :: 3.12",
   "Programming Language :: Python :: 3.13",
+  "Programming Language :: Python :: 3.14",
 ]
 
 dependencies = [
-  "pillow>=11.0.0", # Python 3.9 - 3.13 (https://pillow.readthedocs.io/en/stable/installation/python-support.html)
+  "pillow>=12.0.0", # Python 3.10 - 3.14 (https://pillow.readthedocs.io/en/stable/installation/python-support.html)
 ]
 
 urls.Documentation = "https://github.com/stefmolin/exif-stripper"
@@ -118,7 +119,5 @@ exclude = [ # don't report on checks for these
   '\.__str__$',
 ]
 override_SS05 = [ # allow docstrings to start with these words
-  '^Process ',
-  '^Assess ',
-  '^Access ',
+  '^Unambiguous ',
 ]
