@@ -1,5 +1,5 @@
 <div align="center">
-   <img alt="exif-stripper logo" src="https://github.com/stefmolin/exif-stripper/raw/main/logo.svg">
+   <img alt="exif-stripper logo" src="https://stefaniemolin.com/exif-stripper/logo.svg">
 
 <table>
    <tr>
