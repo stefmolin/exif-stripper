@@ -21,6 +21,11 @@ repos:
     rev: 2.0.0
     hooks:
       - id: docstringify-edit
+        name: docstringify source code with numpydoc style
+        args: [--overwrite, --style=numpydoc]
+        files: src/.*
+      - id: docstringify-edit
+        name: docstringify tests with stubs
         args: [--overwrite, --style=stub]
         files: tests/.*
 
