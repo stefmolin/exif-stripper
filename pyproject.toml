@@ -48,6 +48,7 @@ test = [
 line-length = 88
 format.indent-style = "space"
 format.quote-style = "single"
+format.skip-magic-trailing-comma = false
 format.docstring-code-format = true
 lint.select = [
   "ANN",  # flake8-annotations
@@ -68,6 +69,7 @@ lint.select = [
   "RUF",  # ruff-specific rules
   "SIM",  # flake8-simplify
   "TC",   # flake8-type-checking (performance improvements)
+  "TD",   # flake8-todos
   "TRY",  # tryceratops
   "UP",   # pyupgrade
   "W",    # pycodestyle warning
@@ -79,6 +81,7 @@ lint.extend-per-file-ignores."tests/*" = [ "ANN" ]  # don't require annotations 
 lint.isort.known-first-party = [
   "exif_stripper",
 ]
+lint.isort.split-on-trailing-comma = false
 
 [tool.pytest]
 ini_options.filterwarnings = [ "error" ]
