@@ -39,7 +39,7 @@ scripts.exif-stripper = "exif_stripper.cli:main"
 [dependency-groups]
 dev = [ "pre-commit", { include-group = "test" } ]
 test = [
-  "pytest>=8.3.4",
+  "pytest>=9.0.3",
   "pytest-cov>=4.1.0",
   "pytest-randomly>=3.12.0",
 ]
