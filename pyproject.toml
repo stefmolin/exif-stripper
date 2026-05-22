@@ -29,7 +29,7 @@ classifiers = [
   "Programming Language :: Python :: 3.14",
 ]
 dependencies = [
-  "pillow>=12.0.0", # Python 3.10 - 3.14 (https://pillow.readthedocs.io/en/stable/installation/python-support.html)
+  "pillow>=12.2.0", # Python 3.10 - 3.14 (https://pillow.readthedocs.io/en/stable/installation/python-support.html)
 ]
 urls.Documentation = "https://github.com/stefmolin/exif-stripper"
 urls.Homepage = "https://github.com/stefmolin/exif-stripper"
@@ -37,11 +37,11 @@ urls.Source = "https://github.com/stefmolin/exif-stripper"
 scripts.exif-stripper = "exif_stripper.cli:main"
 
 [dependency-groups]
-dev = [ "pre-commit", { include-group = "test" } ]
+dev = [ "pre-commit>=4.6.0", { include-group = "test" } ]
 test = [
   "pytest>=9.0.3",
-  "pytest-cov>=4.1.0",
-  "pytest-randomly>=3.12.0",
+  "pytest-cov>=7.1.0",
+  "pytest-randomly>=4.1.0",
 ]
 
 [tool.ruff]
