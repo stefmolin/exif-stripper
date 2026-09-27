@@ -84,7 +84,9 @@ lint.isort.known-first-party = [
 lint.isort.split-on-trailing-comma = false
 
 [tool.pytest]
-ini_options.filterwarnings = [ "error" ]
+ini_options.testpaths = [
+  "tests",
+]
 ini_options.addopts = [
   "-ra",
   "-l",
@@ -99,9 +101,7 @@ ini_options.addopts = [
   "--cov-report=term-missing",
 ]
 ini_options.xfail_strict = true
-ini_options.testpaths = [
-  "tests",
-]
+ini_options.filterwarnings = [ "error" ]
 
 [tool.numpydoc_validation]
 checks = [
