@@ -1,10 +1,9 @@
 [build-system]
 build-backend = "hatchling.build"
-requires = [ "hatchling" ]
+requires = [ "hatch-vcs", "hatchling" ]
 
 [project]
 name = "exif-stripper"
-version = "1.2.0"
 description = "An easy-to-use tool to ensure image EXIF metadata is removed."
 readme = "README.md"
 keywords = [
@@ -29,6 +28,7 @@ classifiers = [
   "Programming Language :: Python :: 3.14",
   "Programming Language :: Python :: 3.15",
 ]
+dynamic = [ "version" ]
 dependencies = [
   "pillow>=13.0.0", # Python 3.11 - 3.15 (https://pillow.readthedocs.io/en/stable/installation/python-support.html)
 ]
@@ -44,6 +44,9 @@ test = [
   "pytest-cov>=7.1.0",
   "pytest-randomly>=4.1.0",
 ]
+
+[tool.hatch]
+version.source = "vcs"
 
 [tool.ruff]
 line-length = 88
