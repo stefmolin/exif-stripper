@@ -103,6 +103,7 @@ Then, use the `process_image()` function on individual files (returns `True` if 
 
 ```python
 from exif_stripper import process_image
+
 process_image('/path/to/image')
 ```
 
