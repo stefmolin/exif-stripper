@@ -30,7 +30,7 @@ classifiers = [
   "Programming Language :: Python :: 3.15",
 ]
 dependencies = [
-  "pillow>=12.3.0", # Python 3.10 - 3.14 (https://pillow.readthedocs.io/en/stable/installation/python-support.html)
+  "pillow>=13.0.0", # Python 3.11 - 3.15 (https://pillow.readthedocs.io/en/stable/installation/python-support.html)
 ]
 urls.Documentation = "https://github.com/stefmolin/exif-stripper"
 urls.Homepage = "https://github.com/stefmolin/exif-stripper"
